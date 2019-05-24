@@ -43,8 +43,6 @@ describe('RepositoriesStore', () => {
         url: 'https://github.com/my-user',
         login: 'my-user',
         avatar_url: 'https://github.com/my-user.png',
-        email: 'my-user@users.noreply.github.com',
-        name: 'My User',
         type: 'User',
       },
       private: true,
@@ -62,7 +60,8 @@ describe('RepositoriesStore', () => {
       await repositoriesStore!.updateGitHubRepository(
         addedRepo,
         'https://api.github.com',
-        gitHubRepo
+        gitHubRepo,
+        []
       )
 
       const repositories = await repositoriesStore!.getAll()
@@ -81,7 +80,8 @@ describe('RepositoriesStore', () => {
       const updatedFirstRepo = await repositoriesStore!.updateGitHubRepository(
         firstRepo,
         'https://api.github.com',
-        gitHubRepo
+        gitHubRepo,
+        []
       )
 
       const secondRepo = await repositoriesStore!.addRepository(
@@ -90,7 +90,8 @@ describe('RepositoriesStore', () => {
       const updatedSecondRepo = await repositoriesStore!.updateGitHubRepository(
         secondRepo,
         'https://api.github.com',
-        gitHubRepo
+        gitHubRepo,
+        []
       )
 
       expect(updatedFirstRepo.gitHubRepository!.dbID).toBe(

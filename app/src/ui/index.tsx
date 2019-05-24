@@ -20,6 +20,7 @@ import {
   pushNeedsPullHandler,
   upstreamAlreadyExistsHandler,
   rebaseConflictsHandler,
+  localChangesOverwrittenHandler,
 } from './dispatcher'
 import {
   AppStore,
@@ -54,6 +55,7 @@ import { UiActivityMonitor } from './lib/ui-activity-monitor'
 import { RepositoryStateCache } from '../lib/stores/repository-state-cache'
 import { ApiRepositoriesStore } from '../lib/stores/api-repositories-store'
 import { enablePullWithRebase } from '../lib/feature-flag'
+import { CommitStatusStore } from '../lib/stores/commit-status-store'
 
 if (__DEV__) {
   installDevGlobals()
@@ -133,6 +135,8 @@ const repositoryStateManager = new RepositoryStateCache(repo =>
 
 const apiRepositoriesStore = new ApiRepositoriesStore(accountsStore)
 
+const commitStatusStore = new CommitStatusStore(accountsStore)
+
 const appStore = new AppStore(
   gitHubUserStore,
   cloningRepositoriesStore,
@@ -146,7 +150,12 @@ const appStore = new AppStore(
   apiRepositoriesStore
 )
 
-const dispatcher = new Dispatcher(appStore, repositoryStateManager, statsStore)
+const dispatcher = new Dispatcher(
+  appStore,
+  repositoryStateManager,
+  statsStore,
+  commitStatusStore
+)
 
 dispatcher.registerErrorHandler(defaultErrorHandler)
 dispatcher.registerErrorHandler(upstreamAlreadyExistsHandler)
@@ -158,6 +167,7 @@ dispatcher.registerErrorHandler(gitAuthenticationErrorHandler)
 dispatcher.registerErrorHandler(pushNeedsPullHandler)
 dispatcher.registerErrorHandler(backgroundTaskHandler)
 dispatcher.registerErrorHandler(missingRepositoryHandler)
+dispatcher.registerErrorHandler(localChangesOverwrittenHandler)
 
 if (enablePullWithRebase()) {
   dispatcher.registerErrorHandler(rebaseConflictsHandler)

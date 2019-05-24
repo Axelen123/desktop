@@ -21,6 +21,19 @@ trigger:
       - refs/heads/snap-strict-enclosure
       - refs/tags/*
 
+trigger:
+  batch: true
+  branches:
+    include:
+      - development
+      - releases/*
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - '*'
+
 jobs:
   - job: Windows
     condition: eq(variables['BUILD_WINDOWS'], 'true')

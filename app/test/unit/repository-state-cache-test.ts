@@ -35,9 +35,7 @@ function createSampleGitHubRepository() {
 
 function createSamplePullRequest(gitHubRepository: GitHubRepository) {
   return new PullRequest(
-    10,
     new Date(),
-    null,
     'something',
     1,
     {

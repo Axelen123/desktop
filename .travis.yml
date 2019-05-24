@@ -24,6 +24,7 @@ branches:
   only:
     - development
     - linux
+    - /releases\/.+/
     - /^__release-.*/
     - /^release-.*/
 
