@@ -12,6 +12,7 @@ resources:
         submodules: true
 
 trigger:
+  batch: true
   branches:
     include:
       - refs/heads/development
@@ -20,13 +21,6 @@ trigger:
       # transient branch to help with Snap confinement migration
       - refs/heads/snap-strict-enclosure
       - refs/tags/*
-
-trigger:
-  batch: true
-  branches:
-    include:
-      - development
-      - releases/*
 
 pr:
   autoCancel: true
