@@ -463,7 +463,6 @@ export function buildDefaultMenu({
 
   const helpItems = [
     submitIssueItem,
-    contactSupportItem,
     showUserGuides,
     showKeyboardShortcuts,
     showLogsItem,
